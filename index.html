@@ -1,414 +1,522 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>学情报告 - 模拟演示</title>
+<meta name="viewport"
+ content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>学情报告 · 模拟演示</title>
+
 <style>
-
 :root {
-  --green: #79BDEB;
-  --bg: #F1F9FF;
-  --line: #E8F1F8;
-  --muted: #9AA8B4;
-  --soft: #E1F3FF;
+  --theme:#79bdeb;
+  --soft:#e1f3ff;
+  --bg:#f1f9ff;
+  --line:#e7f0f7;
+  --muted:#9aa8b4;
 }
 
-/* 王橹杰：浅蓝白主题 */
 body.theme-wang {
-  --green: #79BDEB;
-  --bg: #F1F9FF;
-  --line: #E8F1F8;
-  --muted: #9AA8B4;
-  --soft: #E1F3FF;
+  --theme:#79bdeb;
+  --soft:#e1f3ff;
+  --bg:#f1f9ff;
+  --line:#e7f0f7;
+  --muted:#9aa8b4;
 }
 
-/* 穆祉丞：浅粉白主题 */
 body.theme-mu {
-  --green: #EFA2BD;
-  --bg: #FFF4F8;
-  --line: #F9E9F0;
-  --muted: #B5A0AA;
-  --soft: #FFE7F0;
+  --theme:#efa2bd;
+  --soft:#ffe7f0;
+  --bg:#fff4f8;
+  --line:#f9e9f0;
+  --muted:#b5a0aa;
 }
 
-/* 考试图标 */
-.exam-icon {
-  background: var(--soft);
-  color: var(--green);
+* {
+  box-sizing:border-box;
 }
 
-/* 个人头像 */
-.avatar,
-.account-avatar {
-  background: var(--soft);
-  color: var(--green);
-}
-
-/* 底部导航和科目选中状态 */
-.nav-item.active,
-.subject-tab.active {
-  color: var(--green);
-}
-
-/* 科目下划线 */
-.subject-tab.active:after {
-  background: var(--green);
-}
-
-/* 英语成绩趋势图 */
-.chart-note {
-  color: var(--green);
-}
-
-.grade-bar {
-  opacity: 0.8;
-}
 body {
   margin:0;
-  font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;
-  color:#282828;
   background:#e9eaed;
+  color:#292929;
+  font-family:
+    "Microsoft YaHei",
+    "PingFang SC",
+    Arial,sans-serif;
 }
-button {font:inherit;cursor:pointer}
+
+button {
+  font:inherit;
+  cursor:pointer;
+}
+
 .app {
+  width:100%;
   max-width:480px;
   min-height:100vh;
   min-height:100dvh;
   margin:auto;
   background:var(--bg);
-  padding-bottom:76px;
+  padding-bottom:80px;
 }
-.demo {
-  background:#f8faf9;
-  text-align:center;
-  color:#aaa;
-  font-size:10px;
-  padding:5px;
-}
+
 .header {
   height:56px;
-  background:white;
+  background:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
   font-size:18px;
   font-weight:500;
-  border-bottom:1px solid #f2f2f2;
+  border-bottom:1px solid var(--line);
 }
+
 .back {
   position:absolute;
-  left:17px;
+  left:12px;
+  top:0;
+  height:56px;
+  width:45px;
   border:0;
-  background:none;
-  font-size:31px;
-  line-height:1;
-  padding:0 8px;
+  background:transparent;
+  font-size:32px;
+  font-weight:300;
   color:#333;
 }
-.page {display:none}
-.page.active {display:block}
-.section-title {
-  padding:23px 19px 14px;
+
+.demo-label {
+  font-size:10px;
+  text-align:center;
   color:#aaa;
+  background:#fff;
+  padding:4px 0;
+}
+
+.page {
+  display:none;
+}
+
+.page.active {
+  display:block;
+}
+
+/* 考试列表 */
+
+.section-title {
+  color:var(--muted);
+  padding:22px 18px 13px;
   font-size:14px;
 }
-.exam-list {background:#fff}
+
+.exam-list {
+  background:#fff;
+}
+
 .exam-row {
-  min-height:91px;
-  padding:17px 18px;
   display:flex;
   align-items:center;
   gap:14px;
-  border-bottom:1px solid #f3f3f3;
+  min-height:91px;
+  padding:16px 18px;
+  border-bottom:1px solid #f2f2f2;
   cursor:pointer;
 }
+
 .exam-icon {
   width:45px;
   height:45px;
   border-radius:10px;
-  background:#e7f8f4;
-  color:var(--green);
+  background:var(--soft);
+  color:var(--theme);
   display:grid;
   place-items:center;
   flex-shrink:0;
 }
+
 .exam-info {
   flex:1;
   min-width:0;
   font-size:14px;
   line-height:1.6;
 }
+
 .exam-sub {
+  color:#aaa;
   font-size:12px;
-  color:#b3b3b3;
   margin-top:5px;
 }
+
 .arrow {
-  color:#b5b5b5;
+  color:#bbb;
   font-size:23px;
-  font-weight:300;
 }
+
 .exam-footer {
   text-align:center;
-  font-size:12px;
+  padding:28px 0;
   color:#aaa;
-  padding:28px 0 35px;
+  font-size:12px;
 }
+
+/* 学情报告 */
+
 .subject-tabs {
   display:flex;
-  background:#fff;
   overflow-x:auto;
   white-space:nowrap;
+  background:#fff;
+  border-bottom:1px solid var(--line);
   scrollbar-width:none;
-  border-bottom:1px solid #f1f1f1;
 }
-.subject-tabs::-webkit-scrollbar {display:none}
+
+.subject-tabs::-webkit-scrollbar {
+  display:none;
+}
+
 .subject-tab {
-  border:0;
-  background:none;
-  padding:16px 20px;
   flex-shrink:0;
-  font-size:16px;
+  border:0;
+  background:transparent;
+  padding:16px 19px;
+  font-size:15px;
   position:relative;
+  color:#333;
 }
+
 .subject-tab.active {
-  color:var(--green);
+  color:var(--theme);
   font-weight:600;
 }
-.subject-tab.active:after {
+
+.subject-tab.active::after {
   content:"";
   position:absolute;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
+  width:33px;
   height:3px;
-  width:34px;
-  border-radius:4px;
-  background:var(--green);
+  background:var(--theme);
+  border-radius:5px;
 }
-.report-area {padding:13px}
+
+.report-area {
+  padding:13px;
+}
+
 .report-card {
-  background:white;
+  background:#fff;
   border-radius:13px;
   padding:23px;
   margin-bottom:14px;
 }
+
 .score-label {
-  color:#aaa;
+  color:#999;
   font-size:16px;
 }
+
 .big-score {
   display:flex;
   align-items:baseline;
   gap:5px;
-  margin:20px 0 15px;
+  margin:19px 0 17px;
 }
+
 .big-score strong {
-  font-size:66px;
+  font-size:65px;
   font-weight:700;
   letter-spacing:-2px;
-  color:#151515;
+  color:#191919;
 }
-.big-score .unit {font-size:17px}
+
+.big-score .unit {
+  font-size:17px;
+}
+
 .big-score .full {
-  color:#aaa;
   font-size:15px;
-  margin-left:14px;
+  color:#aaa;
+  margin-left:12px;
 }
+
 .rank-row {
-  border-top:1px solid #f0f0f0;
-  border-bottom:1px solid #f0f0f0;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+  padding:20px 0;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:19px 0;
-}
-.rank-row strong {font-size:23px}
-.rank-row small {color:#aaa;font-size:15px}
-.subject-head,.score-row {
-  display:flex;
   justify-content:space-between;
-  align-items:center;
 }
+
+.rank-row strong {
+  font-size:23px;
+}
+
+.rank-row small {
+  font-size:14px;
+  color:#aaa;
+}
+
 .subject-head {
+  display:flex;
+  justify-content:space-between;
   color:#aaa;
   font-size:14px;
   padding:22px 0 12px;
 }
+
 .score-row {
-  height:70px;
-  border-bottom:1px solid #f0f0f0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  height:67px;
+  border-bottom:1px solid #f1f1f1;
   font-size:16px;
 }
-.score-row .score-right {width:110px}
-.score-row .score-right span {color:#aaa}
-.card-heading {
-  font-size:20px;
-  font-weight:600;
-  margin:0 0 20px;
+
+.score-right {
+  width:105px;
 }
+
+.score-right span {
+  color:#aaa;
+}
+
+.card-heading {
+  font-size:19px;
+  font-weight:600;
+  margin:0 0 21px;
+}
+
 .segment {
   display:flex;
-  margin:0 0 25px;
+  margin-bottom:22px;
 }
+
 .segment button {
-  border:1px solid var(--green);
-  color:var(--green);
+  padding:9px 23px;
+  border:1px solid var(--theme);
+  color:var(--theme);
   background:white;
-  padding:9px 24px;
 }
+
 .segment button:first-child {
   border-radius:5px 0 0 5px;
 }
+
 .segment button:last-child {
   border-radius:0 5px 5px 0;
 }
+
 .segment button.active {
-  background:var(--green);
-  color:white;
+  background:var(--theme);
+  color:#fff;
 }
+
 .grade-bar {
-  height:12px;
-  background:linear-gradient(
-    90deg,#fa476b,#ff9c00,#ffd200,
-    #8bd044,#00bdaf
-  );
+  height:11px;
   border-radius:20px;
-  margin:15px 8px 4px;
+  background:linear-gradient(
+    90deg,
+    #fa476b,
+    #ff9c00,
+    #ffd200,
+    #8bd044,
+    #00bdaf
+  );
+  margin:15px 8px 5px;
 }
+
 .grade-labels {
   display:flex;
   justify-content:space-around;
   font-size:12px;
   color:#555;
 }
+
 .chart {
   width:100%;
   height:205px;
   display:block;
-  margin-top:25px;
+  margin-top:20px;
 }
+
 .chart-dates {
   display:flex;
   justify-content:space-between;
-  color:#aaa;
   font-size:11px;
-}
-.chart-note {
-  margin-top:22px;
-  font-size:12px;
-  color:var(--green);
-}
-.paper-placeholder {
-  min-height:220px;
-  border:1px dashed #ddd;
-  background:#fafafa;
-  border-radius:9px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   color:#aaa;
-  font-size:13px;
+}
+
+.chart-note {
+  font-size:12px;
+  color:var(--theme);
+  margin-top:22px;
+}
+
+/* 答题卡 */
+
+.paper-image {
+  display:block;
+  width:100%;
+  height:auto;
+  border:1px solid #eee;
+  border-radius:6px;
+  cursor:zoom-in;
+}
+
+.paper-tip {
   text-align:center;
+  font-size:12px;
+  color:#aaa;
+  margin-top:13px;
 }
+
+.paper-error {
+  display:none;
+  text-align:center;
+  color:#999;
+  background:#fafafa;
+  padding:35px 10px;
+  border:1px dashed #ddd;
+  border-radius:8px;
+  font-size:13px;
+}
+
+/* 我的 */
+
 .my-profile {
-  background:white;
-  padding:29px 20px;
+  background:#fff;
+  padding:28px 20px;
 }
+
 .profile-flex {
   display:flex;
   align-items:center;
   gap:15px;
 }
+
 .avatar {
   width:65px;
   height:65px;
   border-radius:50%;
+  background:var(--soft);
+  color:var(--theme);
   display:grid;
   place-items:center;
-  background:#e6f7f2;
-  color:var(--green);
   font-size:30px;
   font-weight:600;
   flex-shrink:0;
 }
+
 .profile-name {
   font-size:21px;
   font-weight:600;
 }
-.tag {
+
+.student-tag {
   font-size:11px;
-  color:#c18b35;
-  background:#fff4e6;
-  padding:3px 8px;
-  border-radius:15px;
-  margin-left:7px;
   font-weight:400;
+  color:var(--theme);
+  background:var(--soft);
+  border-radius:12px;
+  padding:3px 8px;
+  margin-left:5px;
 }
+
 .profile-detail {
   font-size:12px;
   color:#999;
   margin-top:7px;
 }
+
 .menu-group {
-  background:white;
+  background:#fff;
   margin-top:12px;
 }
+
 .menu-row {
   display:flex;
   align-items:center;
+  gap:15px;
   min-height:58px;
   padding:0 19px;
-  gap:15px;
   border-bottom:1px solid #f1f1f1;
   font-size:15px;
 }
+
 .menu-icon {
   width:25px;
   text-align:center;
-  color:#555;
   font-size:19px;
+  color:#666;
 }
-.menu-name {flex:1}
-.menu-arrow {color:#bbb;font-size:22px}
-.clickable {cursor:pointer}
+
+.menu-name {
+  flex:1;
+}
+
+.menu-arrow {
+  font-size:22px;
+  color:#bbb;
+}
+
+.clickable {
+  cursor:pointer;
+}
+
+/* 底部导航 */
+
 .bottom-nav {
   position:fixed;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  max-width:480px;
   width:100%;
+  max-width:480px;
   height:70px;
   padding-bottom:env(safe-area-inset-bottom);
-  background:white;
+  background:#fff;
   border-top:1px solid #eee;
   display:flex;
   z-index:10;
 }
+
 .nav-item {
   flex:1;
   border:0;
-  background:none;
+  background:transparent;
   color:#aaa;
   font-size:12px;
 }
-.nav-item.active {color:var(--green)}
+
+.nav-item.active {
+  color:var(--theme);
+}
+
 .nav-icon {
   display:block;
   font-size:25px;
   margin-bottom:3px;
 }
+
+/* 切换账号 */
+
 .overlay {
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.36);
+  background:rgba(0,0,0,.35);
   z-index:20;
 }
-.overlay.show {display:block}
+
+.overlay.show {
+  display:block;
+}
+
 .account-sheet {
   position:fixed;
   left:50%;
@@ -416,16 +524,18 @@ button {font:inherit;cursor:pointer}
   transform:translate(-50%,105%);
   width:100%;
   max-width:480px;
-  background:white;
+  background:#fff;
   border-radius:20px 20px 0 0;
   padding:17px 20px 30px;
   padding-bottom:calc(30px + env(safe-area-inset-bottom));
   z-index:21;
   transition:transform .28s;
 }
+
 .account-sheet.show {
   transform:translate(-50%,0);
 }
+
 .handle {
   width:38px;
   height:4px;
@@ -433,192 +543,338 @@ button {font:inherit;cursor:pointer}
   border-radius:5px;
   margin:0 auto 19px;
 }
+
 .sheet-title {
   text-align:center;
   font-size:17px;
   margin-bottom:13px;
 }
+
 .account-row {
-  display:flex;
   width:100%;
-  gap:14px;
+  display:flex;
   align-items:center;
+  gap:14px;
   padding:16px 0;
   background:white;
   border:0;
   border-bottom:1px solid #f1f1f1;
   text-align:left;
 }
+
 .account-avatar {
   width:55px;
   height:55px;
   border-radius:50%;
   display:grid;
   place-items:center;
-  background:#e6f7f2;
-  color:var(--green);
+  background:var(--soft);
+  color:var(--theme);
   font-size:25px;
-  font-weight:bold;
+  font-weight:600;
 }
-.account-info {flex:1}
+
+.account-info {
+  flex:1;
+}
+
 .account-name {
   font-size:18px;
   font-weight:600;
 }
+
 .account-school {
-  color:#999;
   font-size:12px;
+  color:#999;
   margin-top:8px;
 }
+
 .account-check {
   width:25px;
   height:25px;
   border:2px solid #ccc;
   border-radius:50%;
 }
+
 .account-check.selected {
+  background:var(--theme);
   border:0;
-  background:var(--green);
-  color:white;
+  color:#fff;
   display:grid;
   place-items:center;
 }
+
 .cancel {
   width:100%;
-  margin-top:19px;
-  padding:13px;
   border:0;
-  border-radius:10px;
   background:#f5f6f7;
   color:#555;
+  padding:13px;
+  border-radius:10px;
+  margin-top:19px;
 }
+
+/* 提示 */
+
 .toast {
   display:none;
   position:fixed;
+  bottom:100px;
   left:50%;
-  bottom:105px;
   transform:translateX(-50%);
   background:rgba(35,35,35,.88);
-  color:white;
+  color:#fff;
   padding:12px 22px;
   border-radius:22px;
   font-size:14px;
-  z-index:40;
+  z-index:50;
   white-space:nowrap;
 }
+
+/* 图片放大 */
+
+.image-viewer {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.94);
+  align-items:center;
+  justify-content:center;
+  padding:45px 10px;
+}
+
+.image-viewer.show {
+  display:flex;
+}
+
+.viewer-image {
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+.viewer-close {
+  position:absolute;
+  top:18px;
+  right:18px;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+  border:0;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  font-size:25px;
+}
+
 @media(min-width:600px) {
-  .app {box-shadow:0 0 25px #0000000a}
+  .app {
+    box-shadow:0 0 25px #0000000a;
+  }
 }
 </style>
 </head>
-<body>
 
+<body class="theme-wang">
 
 <div class="app">
+
   <header class="header">
-    <button class="back" id="backBtn" onclick="goBack()">‹</button>
+    <button
+      class="back"
+      id="backBtn"
+      onclick="goBack()">‹</button>
+
     <span id="pageTitle">学情报告</span>
   </header>
 
+  <div class="demo-label">
+    学情报告 · 模拟演示
+  </div>
+
+  <!-- 考试列表 -->
+
   <section class="page" id="examPage">
+
     <div class="section-title">考试报告</div>
+
     <div class="exam-list" id="examList"></div>
-    <div class="exam-footer">仅可查看一学年内考试</div>
+
+    <div class="exam-footer">
+      仅可查看一学年内考试
+    </div>
+
   </section>
+
+  <!-- 学情报告 -->
 
   <section class="page active" id="reportPage">
+
     <div class="subject-tabs" id="subjectTabs"></div>
+
     <div class="report-area" id="reportContent"></div>
+
   </section>
 
+  <!-- 我的 -->
+
   <section class="page" id="myPage">
+
     <div class="my-profile">
       <div class="profile-flex">
+
         <div class="avatar" id="profileAvatar"></div>
+
         <div>
           <div class="profile-name">
             <span id="profileName"></span>
-            <span class="tag">学生</span>
+            <span class="student-tag">学生</span>
           </div>
+
           <div class="profile-detail" id="profileSchool"></div>
           <div class="profile-detail" id="profileClass"></div>
           <div class="profile-detail" id="profileId"></div>
         </div>
+
       </div>
     </div>
 
     <div class="menu-group">
+
       <div class="menu-row">
         <span class="menu-icon">▦</span>
         <span class="menu-name">我的二维码</span>
         <span class="menu-arrow">›</span>
       </div>
+
       <div class="menu-row">
         <span class="menu-icon">⌖</span>
         <span class="menu-name">收货地址</span>
         <span class="menu-arrow">›</span>
       </div>
+
     </div>
 
     <div class="menu-group">
+
       <div class="menu-row">
         <span class="menu-icon">☏</span>
         <span class="menu-name">客服中心</span>
         <span class="menu-arrow">›</span>
       </div>
+
       <div class="menu-row">
         <span class="menu-icon">ⓘ</span>
         <span class="menu-name">投诉举报</span>
         <span class="menu-arrow">›</span>
       </div>
+
       <div class="menu-row">
         <span class="menu-icon">♧</span>
         <span class="menu-name">意见反馈</span>
         <span class="menu-arrow">›</span>
       </div>
+
     </div>
 
     <div class="menu-group">
-      <div class="menu-row clickable" onclick="openAccounts()">
+      <div class="menu-row clickable"
+           onclick="openAccounts()">
+
         <span class="menu-icon">⇄</span>
         <span class="menu-name">切换账号</span>
         <span class="menu-arrow">›</span>
+
       </div>
     </div>
+
   </section>
 
+  <!-- 底部导航 -->
+
   <nav class="bottom-nav" id="bottomNav">
-    <button class="nav-item" id="examNav" onclick="showPage('exam')">
-      <span class="nav-icon">⌂</span>考试
+
+    <button class="nav-item"
+            id="examNav"
+            onclick="showPage('exam')">
+      <span class="nav-icon">⌂</span>
+      考试
     </button>
-    <button class="nav-item" id="myNav" onclick="showPage('my')">
-      <span class="nav-icon">♟</span>我的
+
+    <button class="nav-item"
+            id="myNav"
+            onclick="showPage('my')">
+      <span class="nav-icon">♙</span>
+      我的
     </button>
+
   </nav>
+
 </div>
 
-<div class="overlay" id="overlay" onclick="closeAccounts()"></div>
+<!-- 切换账号弹窗 -->
+
+<div class="overlay"
+     id="overlay"
+     onclick="closeAccounts()"></div>
 
 <div class="account-sheet" id="accountSheet">
+
   <div class="handle"></div>
+
   <div class="sheet-title">切换账号</div>
+
   <div id="accountList"></div>
-  <button class="cancel" onclick="closeAccounts()">取消</button>
+
+  <button class="cancel"
+          onclick="closeAccounts()">
+    取消
+  </button>
+
 </div>
+
+<!-- 提示消息 -->
 
 <div class="toast" id="toast"></div>
 
+<!-- 答题卡大图 -->
+
+<div class="image-viewer"
+     id="imageViewer"
+     onclick="closeImage()">
+
+  <button class="viewer-close"
+          onclick="closeImage()">×</button>
+
+  <img class="viewer-image"
+       id="viewerImage"
+       alt="英语答题卡">
+
+</div>
+
 <script>
+
+/* ==========================
+   两个账号的数据
+========================== */
+
 const accounts = {
+
   wang: {
     name:"王橹杰",
     surname:"王",
+
     school:"重庆市第十一中学校",
     className:"高中2026届1班",
     studentId:"202610010827",
+
     exam:"高2026届高一（下）三月第一次联合诊断性考试",
+
     total:611,
     rank:"116/1011",
+
+    englishImage:"wang-english.png",
+
     scores:[
       ["语文",126,150],
       ["数学",119,150],
@@ -627,6 +883,7 @@ const accounts = {
       ["道德与法治",78,100],
       ["地理",74,100]
     ],
+
     history:[
       "高2026届高一（下）文理分班测试",
       "高2026届高一（上）期末质量检测",
@@ -636,15 +893,22 @@ const accounts = {
       "重庆十一中2026届入学摸底测试"
     ]
   },
+
   mu: {
     name:"穆祉丞",
     surname:"穆",
+
     school:"重庆市第八中学校",
     className:"高三（1）班",
     studentId:"202407111611",
+
     exam:"高2024届高三（下）三月第一次全市联考",
+
     total:627,
     rank:"108/1027",
+
+    englishImage:"mu-english.png",
+
     scores:[
       ["语文",130,150],
       ["数学",125,150],
@@ -653,6 +917,7 @@ const accounts = {
       ["道德与法治",79,100],
       ["地理",72,100]
     ],
+
     history:[
       "重庆市七校联盟高三下期第一次联考",
       "高2024届高三（上）期末质量检测",
@@ -662,62 +927,95 @@ const accounts = {
       "重庆八中2024届高三入学统一测验"
     ]
   }
+
 };
 
+/* ==========================
+   基础状态
+========================== */
+
 const $ = id => document.getElementById(id);
+
 const params = new URLSearchParams(location.search);
 
-let currentAccount = params.get("account")==="mu" ? "mu" : "wang";
-let currentPage = "report";
-let currentSubject = "英语";
-let chartType = "班级";
+let currentAccount =
+  params.get("account")==="mu" ? "mu" : "wang";
+
+let currentPage="report";
+let currentSubject="英语";
+let chartType="班级";
 
 function user() {
   return accounts[currentAccount];
 }
 
 function applyTheme() {
+
   document.body.classList.remove(
-    "theme-wang",
-    "theme-mu"
+    "theme-wang","theme-mu"
   );
 
   document.body.classList.add(
-    currentAccount === "wang"
+    currentAccount==="wang"
       ? "theme-wang"
       : "theme-mu"
   );
 }
 
+function themeColor() {
+  return currentAccount==="wang"
+    ? "#79bdeb"
+    : "#efa2bd";
+}
+
+/* ==========================
+   消息提示
+========================== */
+
 function toast(message) {
-  $("toast").textContent = message;
-  $("toast").style.display = "block";
+
+  $("toast").textContent=message;
+  $("toast").style.display="block";
+
   clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(()=>{
-    $("toast").style.display = "none";
+
+  window.toastTimer=setTimeout(()=>{
+    $("toast").style.display="none";
   },1800);
 }
 
+/* ==========================
+   页面切换
+========================== */
+
 function showPage(page) {
-  currentPage = page;
+
+  currentPage=page;
   applyTheme();
 
   ["exam","report","my"].forEach(name=>{
-    $(name+"Page").classList.toggle("active",name===page);
+    $(name+"Page").classList.toggle(
+      "active",name===page
+    );
   });
 
-  $("pageTitle").textContent =
+  $("pageTitle").textContent=
     page==="exam" ? "考试" :
     page==="my" ? "我的" : "学情报告";
 
-  $("backBtn").style.display =
+  $("backBtn").style.display=
     page==="report" ? "block" : "none";
 
-  $("bottomNav").style.display =
+  $("bottomNav").style.display=
     page==="report" ? "none" : "flex";
 
-  $("examNav").classList.toggle("active",page==="exam");
-  $("myNav").classList.toggle("active",page==="my");
+  $("examNav").classList.toggle(
+    "active",page==="exam"
+  );
+
+  $("myNav").classList.toggle(
+    "active",page==="my"
+  );
 
   if(page==="exam") renderExams();
   if(page==="report") renderReport();
@@ -731,27 +1029,41 @@ function goBack() {
 }
 
 function openCurrentExam() {
-  currentSubject = "全科";
+  currentSubject="全科";
   showPage("report");
 }
 
+/* ==========================
+   考试列表
+========================== */
+
 function renderExams() {
-  const u = user();
 
-  const names = [u.exam,...u.history];
+  const u=user();
+  const names=[u.exam,...u.history];
 
-  $("examList").innerHTML = names.map((name,index)=>`
+  $("examList").innerHTML=names.map((name,index)=>`
+
     <div class="exam-row"
-      onclick="${index===0
-        ? "openCurrentExam()"
-        : "toast('不在查看时间')"}">
+         onclick="${index===0
+           ? "openCurrentExam()"
+           : "toast('不在查看时间')"}">
 
       <div class="exam-icon">
-        <svg width="25" height="25" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="5" y="3" width="14" height="18" rx="1"/>
-          <path d="M8 8h8M8 12h8M8 16h8"/>
+
+        <svg width="25" height="25"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
+          <rect x="5" y="3"
+                width="14" height="18" rx="1"/>
+
+          <path d="M8 8h8 M8 12h8 M8 16h8"/>
+
         </svg>
+
       </div>
 
       <div class="exam-info">
@@ -760,52 +1072,81 @@ function renderExams() {
       </div>
 
       <div class="arrow">›</div>
+
     </div>
+
   `).join("");
 }
 
+/* ==========================
+   科目导航
+========================== */
+
 function chooseSubject(name) {
+
   if(name!=="全科" && name!=="英语") {
-    toast("请扫描二维码");
+
+    toast("请扫描条形码");
     return;
+
   }
 
-  currentSubject = name;
+  currentSubject=name;
   renderReport();
 }
 
 function renderReport() {
-  const subjects = [
+
+  const subjects=[
     "全科","语文","数学","英语",
     "历史","道德与法治","地理"
   ];
 
-  $("subjectTabs").innerHTML = subjects.map(name=>`
-    <button class="subject-tab
-      ${name===currentSubject?"active":""}"
+  $("subjectTabs").innerHTML=subjects.map(name=>`
+
+    <button
+      class="subject-tab
+        ${name===currentSubject?"active":""}"
       onclick="chooseSubject('${name}')">
+
       ${name}
+
     </button>
+
   `).join("");
 
-  $("reportContent").innerHTML =
-    currentSubject==="全科" ? renderAll() : renderEnglish();
+  $("reportContent").innerHTML=
+    currentSubject==="全科"
+      ? renderAll()
+      : renderEnglish();
 
-  const active = document.querySelector(".subject-tab.active");
+  const active=document.querySelector(
+    ".subject-tab.active"
+  );
+
   if(active) {
+
     active.scrollIntoView({
       block:"nearest",
       inline:"center"
     });
+
   }
 }
 
+/* ==========================
+   全科报告
+========================== */
+
 function renderAll() {
-  const u = user();
-  const rank = u.rank.split("/");
+
+  const u=user();
+  const rank=u.rank.split("/");
 
   return `
+
     <div class="report-card">
+
       <div class="score-label">总分</div>
 
       <div class="big-score">
@@ -815,53 +1156,87 @@ function renderAll() {
       </div>
 
       <div class="rank-row">
+
         <span>年级排名</span>
+
         <div>
           <strong>${rank[0]}</strong>
           <small> / ${rank[1]}</small>
         </div>
+
       </div>
 
       <div class="subject-head">
         <span>科目</span>
-        <span style="width:110px">原分/满分</span>
+        <span style="width:105px">原分/满分</span>
       </div>
 
       ${u.scores.map(item=>`
+
         <div class="score-row">
+
           <span>${item[0]}</span>
+
           <div class="score-right">
             ${item[1]}
             <span>/${item[2]}</span>
           </div>
+
         </div>
+
       `).join("")}
+
     </div>
+
   `;
 }
 
+/* ==========================
+   英语报告
+========================== */
+
 function renderEnglish() {
-  const score = user().scores[2][1];
+
+  const u=user();
+  const score=u.scores[2][1];
+  const color=themeColor();
 
   return `
-    <div class="report-card" style="min-height:205px">
+
+    <div class="report-card">
+
       <div class="score-label">英语</div>
 
       <div class="big-score">
+
         <strong>${score}</strong>
+
         <span class="unit">分</span>
+
         <span class="full">满分 150</span>
+
       </div>
+
     </div>
 
     <div class="report-card">
+
       <h3 class="card-heading">历次成绩变化</h3>
 
       <div class="segment">
-        <button class="${chartType==="班级"?"active":""}"
-          onclick="changeChart('班级')">班级</button>
-        <button class="${chartType==="年级"?"active":""}"
-          onclick="changeChart('年级')">年级</button>
+
+        <button
+          class="${chartType==="班级"?"active":""}"
+          onclick="changeChart('班级')">
+          班级
+        </button>
+
+        <button
+          class="${chartType==="年级"?"active":""}"
+          onclick="changeChart('年级')">
+          年级
+        </button>
+
       </div>
 
       <div class="grade-bar"></div>
@@ -874,14 +1249,27 @@ function renderEnglish() {
         <span>A等</span>
       </div>
 
-      <svg class="chart" viewBox="0 0 340 190"
-        preserveAspectRatio="none">
+      <svg class="chart"
+           viewBox="0 0 340 190"
+           preserveAspectRatio="none">
 
         <g stroke="#eeeeee" stroke-width="1">
-          <path d="M10 20H330 M10 55H330
-                   M10 90H330 M10 125H330 M10 160H330"/>
-          <path d="M35 15V165 M110 15V165
-                   M185 15V165 M260 15V165"/>
+
+          <path d="
+            M10 20H330
+            M10 55H330
+            M10 90H330
+            M10 125H330
+            M10 160H330
+          "/>
+
+          <path d="
+            M35 15V165
+            M110 15V165
+            M185 15V165
+            M260 15V165
+          "/>
+
         </g>
 
         <g fill="#aaa" font-size="12">
@@ -896,23 +1284,38 @@ function renderEnglish() {
           d="M35 75 Q70 50 110 52
              T185 56 T260 61 T320 48"
           fill="none"
-          stroke="#00bfb3"
-          stroke-width="3.5"/>
+          stroke="${color}"
+          stroke-width="3.5"
+        />
 
-        <g fill="white" stroke="#00bfb3" stroke-width="3">
+        <g fill="white"
+           stroke="${color}"
+           stroke-width="3">
+
           <circle cx="35" cy="75" r="4.5"/>
           <circle cx="110" cy="52" r="4.5"/>
           <circle cx="185" cy="56" r="4.5"/>
           <circle cx="260" cy="61" r="4.5"/>
+
         </g>
 
-        <circle cx="320" cy="48" r="6"
-          fill="white" stroke="#ffc63b" stroke-width="4"/>
+        <circle cx="320" cy="48"
+                r="6"
+                fill="white"
+                stroke="${color}"
+                stroke-width="4"/>
 
-        <rect x="286" y="15" width="49" height="25"
-          rx="5" fill="#00bfb3"/>
-        <text x="310" y="32" text-anchor="middle"
-          fill="white" font-size="13">A等</text>
+        <rect x="286" y="15"
+              width="49" height="25"
+              rx="5" fill="${color}"/>
+
+        <text x="310" y="32"
+              text-anchor="middle"
+              fill="white"
+              font-size="13">
+          A等
+        </text>
+
       </svg>
 
       <div class="chart-dates">
@@ -920,82 +1323,170 @@ function renderEnglish() {
         <span>07.07</span>
         <span>11.01</span>
         <span>02.20</span>
-        <span style="color:#00bfb3">03.01</span>
+        <span>03.01</span>
       </div>
 
       <div class="chart-note">
-        *参考教育部门等级划分规则呈现成绩
-        （演示数据）
+        *成绩趋势为模拟示例数据，
+        不代表真实历次考试记录。
       </div>
+
     </div>
 
     <div class="report-card">
+
       <h3 class="card-heading">原卷批阅</h3>
-      <div class="paper-placeholder">
-        英语答题卡图片待添加
+
+      <img
+        class="paper-image"
+        src="${u.englishImage}"
+        alt="${u.name}英语答题卡"
+        onclick="openImage(this.src)"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='block';
+        "
+      >
+
+      <div class="paper-error">
+        答题卡图片暂未加载<br><br>
+        请确认已上传 ${u.englishImage}
       </div>
+
+      <div class="paper-tip">
+        点击答题卡可放大查看
+      </div>
+
     </div>
+
   `;
 }
 
 function changeChart(type) {
-  chartType = type;
+  chartType=type;
   renderReport();
 }
 
-function renderProfile() {
-  const u = user();
+/* ==========================
+   答题卡放大
+========================== */
 
-  $("profileAvatar").textContent = u.surname;
-  $("profileName").textContent = u.name;
-  $("profileSchool").textContent = u.school;
-  $("profileClass").textContent = u.className;
-  $("profileId").textContent = "学号："+u.studentId;
+function openImage(src) {
+
+  $("viewerImage").src=src;
+
+  $("imageViewer").classList.add("show");
+
+  document.body.style.overflow="hidden";
 }
 
+function closeImage() {
+
+  $("imageViewer").classList.remove("show");
+
+  $("viewerImage").removeAttribute("src");
+
+  document.body.style.overflow="";
+}
+
+/* ==========================
+   我的页面
+========================== */
+
+function renderProfile() {
+
+  const u=user();
+
+  $("profileAvatar").textContent=u.surname;
+
+  $("profileName").textContent=u.name;
+
+  $("profileSchool").textContent=u.school;
+
+  $("profileClass").textContent=u.className;
+
+  $("profileId").textContent=
+    "学号："+u.studentId;
+}
+
+/* ==========================
+   切换账号
+========================== */
+
 function openAccounts() {
-  $("accountList").innerHTML =
+
+  $("accountList").innerHTML=
     Object.entries(accounts).map(([key,u])=>`
-      <button class="account-row"
+
+      <button
+        class="account-row"
         onclick="switchAccount('${key}')">
 
-        <div class="account-avatar">${u.surname}</div>
+        <div class="account-avatar">
+          ${u.surname}
+        </div>
 
         <div class="account-info">
-          <div class="account-name">${u.name}</div>
-          <div class="account-school">${u.school}</div>
+
+          <div class="account-name">
+            ${u.name}
+          </div>
+
+          <div class="account-school">
+            ${u.school}
+          </div>
+
         </div>
 
         <div class="account-check
           ${key===currentAccount?"selected":""}">
+
           ${key===currentAccount?"✓":""}
+
         </div>
+
       </button>
+
     `).join("");
 
   $("overlay").classList.add("show");
+
   $("accountSheet").classList.add("show");
 }
 
 function closeAccounts() {
+
   $("overlay").classList.remove("show");
+
   $("accountSheet").classList.remove("show");
 }
 
 function switchAccount(key) {
-  currentAccount = key;
 
-  const url = new URL(location.href);
+  if(!accounts[key]) return;
+
+  currentAccount=key;
+
+  const url=new URL(location.href);
+
   url.searchParams.set("account",key);
+
   history.replaceState(null,"",url);
 
   closeAccounts();
-  currentSubject = "英语";
+
+  currentSubject="英语";
+  chartType="班级";
+
   showPage("my");
 }
 
-/* 首次进入默认英语 */
+/* ==========================
+   首次打开默认英语报告
+========================== */
+
 showPage("report");
+
 </script>
 </body>
 </html>
